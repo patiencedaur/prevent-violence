@@ -31,6 +31,7 @@ monogatari.assets ('music', {
 
 });
 
+
 // Define the voice files used in the game.
 monogatari.assets ('voice', {
 
@@ -58,6 +59,12 @@ monogatari.assets ('scenes', {
 
 
 // Define the Characters
+monogatari.characters ({
+	'l': {
+		name: 'Алексей',
+		color: '#5bcaff'
+	}
+});
 
 monogatari.script ({
 	// The game starts here.
@@ -87,46 +94,62 @@ monogatari.script ({
 				'Warning': 'Пожалуйста, введи имя!'
 			}
 		},*/
-		'Hi there, {{player.name}}!',
-		function(){
-		    alert("I'll write this to the database!");
-		    return true; // Will make the engine execute the next statement when the function finishes.
-		},
-		'Прежде чем начать игру, пожалуйста, ответь на два вопроса:',
+		// 'Hi there, {{player.name}}!',
+		// function(){
+		//     alert("I'll write this to the database!");
+		//     return true; // Will make the engine execute the next statement when the function finishes.
+		// },
+		'Вы идёте на свидание в кафе. Он галантно придерживает перед тобой дверь.',
 		'show scene #f7f6f6 with fadeIn',
-		'1. Читала ли ты доку, Дездемона?',
+		'l Я помогу тебе снять пальто?',
 		{
 			'Choice': {
 				'Yes': {
-					'Text': 'Да, на что ты намекаешь?',
-					'Do': 'jump Yes',
-					'onChosen': () => {
-            	alert("I'll write this to the database!");
-            }
+					'Text': 'Давай?',
+					'Do': 'jump CoatOff',
+					// 'onChosen': () => {
+          //   	alert("I'll write this to the database!");
+          //   }
 				},
 				'No': {
-					'Text': 'Не совсем понимаю, о чём ты. Если хочешь сказать, говори прямо',
-					'Do': 'jump No'
+					'Text': 'Нет, разденусь сама',
+					'Do': 'jump CoatOff'
 				}
 			}
 		}
 	],
 
-	'Yes': [
-		'Крутяк!',
-		'Тогда пиши код!',
-		'Отличная игра будет!',
+	'CoatOff': [
+		'show scene #f7f6f6 with fadeIn',
+		'Вы мило говорите о том, о сём.',
+		'Постепенно вы узнаёте друг друга лучше, и разговор переходит на серьёзные темы.',
+		'l Знаешь, я всегда мечтал о семье и детях. Хочу серьёзных отношений...',
+		'l Моя бывшая - овца...',
+		'l Слушай, тебе не мешает шум за соседним столом?',
+		'Эти иногородние - как их только земля носит? Совсем охренели. Давай пойду разберусь?',
+		{
+			'Choice': {
+				'Yes': {
+					'Text': 'Да, поставь их на место',
+					'Do': 'jump KickOthers',
+				},
+				'No': {
+					'Text': 'Нет, мне не мешают',
+					'Do': 'jump NoKickOthers',
+				}
+			}
+		}
+	],
+
+	'KickOthers': [
+		//'show message Help',
+		'show scene #f7f6f6 with fadeIn',
+		'l Как я вас сейчас пну!',
 		'end'
 	],
 
-	'No': [
-
-		'Почитай.',
-
-		'show message Help',
-
-		'У тебя получится клёвая игра!',
-		'А сценарий заставит многих задуматься...',
+	'NoKickOthers': [
+		'l Ну и дура',
 		'end'
 	]
 });
