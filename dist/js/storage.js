@@ -2,7 +2,13 @@
 
 // Persistent Storage Variable
 monogatari.storage ({
-	player: {
-		name: ''
+	personal_ideas: {	// User sets this at the beginning of the novel.
+		family_important: true,
+		persist: true
+	},
+
+	plot: {
+		episode1_taxi_called: true,
+		episode1_meeting: false
 	}
 });

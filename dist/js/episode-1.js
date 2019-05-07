@@ -1,12 +1,27 @@
 monogatari.label ('Episode1', [
-  'Вы идёте на свидание в кафе. Он галантно придерживает перед тобой дверь.',
+  // Debug
+  'Семья - это важно: {{personal_ideas.family_important}}',
+  'Настойчивость: {{personal_ideas.persist}}',
+
   'show scene #f7f6f6 with fadeIn',
+  'Вы идёте на свидание в кафе. Он галантно придерживает перед тобой дверь.',
+  {
+    // checkPersist
+    'Conditional': {
+      'Condition': () => { return this.storage.personal_ideas.persist; },
+      'True': 'jump HelpWithCoat',
+      'False': 'jump AskAboutCoat'
+    }
+  }
+])
+
+monogatari.label('AskAboutCoat', [
   'l Я помогу тебе снять пальто?',
   {
     'Choice': {
       'Yes': {
         'Text': 'Давай?',
-        'Do': 'jump CoatOff'
+        'Do': 'jump HelpWithCoat'
         // 'onChosen': () => {
         //   	alert("I'll write this to the database!");
         //   }
@@ -19,11 +34,24 @@ monogatari.label ('Episode1', [
   }
 ])
 
+monogatari.label ('HelpWithCoat', [
+  'Он снимает с тебя пальто, и вы садитесь за столик.',
+  'jump CoatOff'
+])
+
 monogatari.label ('CoatOff', [
   'show scene #f7f6f6 with fadeIn',
   'Вы мило говорите о том, о сём.',
   'Постепенно вы узнаёте друг друга лучше, и разговор переходит на серьёзные темы.',
-  'l Знаешь, я всегда мечтал о семье и детях. Хочу серьёзных отношений...',
+
+  // checkFamily
+  {
+    'Conditional': {
+      'Condition': () => {  return this.storage.personal_ideas.family_important;  },
+      'True': 'l Знаешь, я всегда мечтал о семье и детях. Хочу серьёзных отношений...',
+      'False': 'l Меня восхищают сильные женщины!'
+    }
+  },
   'l Моя бывшая - овца...',
   'l Слушай, тебе не мешает шум за соседним столом?',
   'l Эти иногородние - как их только земля носит? Совсем охренели. Давай пойду разберусь?',
@@ -66,6 +94,16 @@ monogatari.label ('Bill', [
 ]);
 
 monogatari.label ('BegToPay', [
+  {
+    'Conditional': {
+      'Condition': () => {  return this.storage.personal_ideas.persist;  },
+      'True': 'jump PersistAndPay',
+      'False': 'jump SeeOff',
+    }
+  }
+]);
+
+monogatari.label ('PersistAndPay', [
   'l Ни в коем случае, я заплачу.',
   'Несмотря на твой протест, твой спутник оплачивает счёт.',
   'jump SeeOff'
@@ -74,23 +112,52 @@ monogatari.label ('BegToPay', [
 monogatari.label ('SeeOff', [
   'Вы выходите из кафе, обсуждая твою любимую группу Poison Wing.',
   'Завтра как раз её концерт, но у тебя много дел в универе.',
+  {
+    'Conditional': {
+      'Condition': () => {  return this.storage.personal_ideas.persist;  },
+      'True': 'jump CallTaxi',
+      'False': 'jump AskToCallTaxi'
+    }
+  }
+]);
+
+monogatari.label ('CallTaxi', [
+  'l Я вызвал тебе такси до дома. Спасибо за чудесный вечер, красавица',
+  'jump GoingHome'
+]);
+
+monogatari.label ('AskToCallTaxi', [
   'l Спасибо за чудесный вечер. Вызвать тебе такси до дома?',
   {
     'Choice': {
       'Yes': {
         'Text': 'Да, буду рада',
-        'Do': 'jump GoingHome',
+        'Do': 'jump GoingHomeTaxi',
       },
       'No': {
         'Text': 'Нет, спасибо. Доберусь сама.',
-        'Do': 'jump GoingHome',
+        'Do': 'jump GoingHomeBus',
+        'Save': () => {
+          this.storage ('plot', {
+            episode1_taxi_called: false
+          });
+        }
       }
     }
   }
 ]);
 
-monogatari.label ('GoingHome', [
+monogatari.label ('GoingHomeTaxi', [
   'Вы прощаетесь. Подъезжает такси, ты садишься и едешь домой.',
+  'jump EnterHome',
+]);
+
+monogatari.label ('GoingHomeBus', [
+  'Вы прощаетесь. Подъезжает автобус, ты садишься и едешь домой.',
+  'jump EnterHome',
+]);
+
+monogatari.label ('EnterHome', [
   'Как только ты открываешь дверь квартиры, тебе приходит смс:',
   'l Как добралась?',
   {
@@ -126,11 +193,43 @@ monogatari.label ('WhatAreYouDoing', [
     'Choice': {
       'Study': {
         'Text': 'Готовлюсь к парам...',
-        'Do': 'jump GoodLuck',
+        'Do': 'jump TextCheckPersist',
       }
     }
   }
 ]);
+
+// Helper that checks for 'persist' and chooses further branch of dialogue.
+monogatari.label ('TextCheckPersist', [
+  {
+    'Conditional': {
+      'Condition': () => {  return this.storage.personal_ideas.persist;  },
+      'True': 'jump FollowUpMeetTomorrow',
+      'False': 'jump SeeYouLater'
+    }
+  }
+]);
+
+monogatari.label ('FollowUpMeetTomorrow', [
+  'l Давай всё-таки увидимся завтра? :))))',
+  {
+    'Choice': {
+      'Yes': {
+        'Text': 'Давай попробуем!',
+        'Do': 'jump SeeYouLater'
+      },
+      'No': {
+        'Text': 'Нет, мне никак :(',
+        'Do': 'jump TooBad'
+      }
+    }
+  }
+]);
+
+monogatari.label ('TooBad', [
+  'l Что ж, жаль...',
+  'jump GoodNight'
+])
 
 monogatari.label ('SeeYouLater', [
   'l С нетерпением жду завтрашней встречи!',
@@ -138,7 +237,7 @@ monogatari.label ('SeeYouLater', [
 ]);
 
 monogatari.label ('GoodLuck', [
-  'l Удачи в этом нелёгком деле! :)',
+  'l Удачи в этом нелёгком деле!',
   'jump GoodNight',
 ]);
 

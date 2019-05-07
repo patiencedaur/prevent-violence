@@ -68,37 +68,63 @@ monogatari.characters ({
 
 monogatari.script ({
 	// The game starts here.
-	'Start': [
+	"Start": [
 		'show scene #f7f6f6 with fadeIn',
-	/*	{
-			'Input': {
-				'Text': 'Как тебя зовут?',
-				'Validation': function (input) {
-					return input.trim ().length > 0;
+		// "notify Welcome",
+		"Прежде чем мы начнём, пожалуйста, ответь на два вопроса.",
+		"Согласна ли ты со следующими утверждениями:",
+		"jump QuestionFamily"
+	],
+
+	"QuestionFamily": [
+		"1. Сейчас для меня важнее всего создать семью",
+		{
+			'Choice': {
+				'Yes': {
+					'Text': "Правда",
+					'Do': "jump QuestionPersistence",
+					'Save': () => {
+						this.storage ('personal_ideas', {
+							family_important: true
+						});
+					}
 				},
-				'Save': function (input) {
-					this.storage ({
-						player: {
-							name: input
-						}
-					});
-					return true;
-				},
-				'Revert': function () {
-					this.storage ({
-						player: {
-							name: ''
-						}
-					});
-				},
-				'Warning': 'Пожалуйста, введи имя!'
+				'No': {
+					'Text': "Неправда",
+					'Do': "jump QuestionPersistence",
+					'Save': function() {
+			      this.storage ('personal_ideas', {
+		          family_important: false
+			      });
+					}
+				}
 			}
-		},*/
-		// 'Hi there, {{player.name}}!',
-		// function(){
-		//     alert("I'll write this to the database!");
-		//     return true; // Will make the engine execute the next statement when the function finishes.
-		// },
-		"jump Episode1"
+		}
+	],
+
+	"QuestionPersistence": [
+		'2. Настоящий мужчина должен добиваться женщину.',
+		{
+			'Choice': {
+				'Yes': {
+					'Text': "Правда",
+					'Do': "jump Episode1",
+					'Save': () => {
+						this.storage ('personal_ideas', {
+							persist: true
+						});
+					}
+				},
+				'No': {
+					'Text': "Неправда",
+					'Do': "jump Episode1",
+					'Save': function() {
+			      this.storage ('personal_ideas', {
+		          persist: false
+			      });
+					}
+				}
+			}
+		}
 	]
 });
