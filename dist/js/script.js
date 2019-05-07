@@ -1,5 +1,15 @@
 /* global monogatari */
 
+// Functions to check player choices.
+function checkPersist() {
+	return monogatari.storage().personal_ideas.persist;
+}
+
+function checkFamily() {
+	return monogatari.storage().personal_ideas.family_important;
+}
+
+
 // Define the messages used in the game.
 monogatari.action ('Message').messages ({
 	'Help': {
@@ -83,23 +93,19 @@ monogatari.script ({
 				'Yes': {
 					'Text': "Правда",
 					'Do': "jump QuestionPersistence",
-					'Save': () => {
-						this.storage ('personal_ideas', {
-							family_important: true
-						});
-					}
-				},
+					'onChosen': () => {
+						monogatari.storage().personal_ideas.family_important = true;
+						}
+					},
 				'No': {
 					'Text': "Неправда",
 					'Do': "jump QuestionPersistence",
-					'Save': function() {
-			      this.storage ('personal_ideas', {
-		          family_important: false
-			      });
+					'onChosen': () => {
+							monogatari.storage().personal_ideas.family_important = false;
+			      }
 					}
 				}
 			}
-		}
 	],
 
 	"QuestionPersistence": [
@@ -109,19 +115,15 @@ monogatari.script ({
 				'Yes': {
 					'Text': "Правда",
 					'Do': "jump Episode1",
-					'Save': () => {
-						this.storage ('personal_ideas', {
-							persist: true
-						});
+					'onChosen': () => {
+						monogatari.storage().personal_ideas.persist = true;
 					}
 				},
 				'No': {
 					'Text': "Неправда",
 					'Do': "jump Episode1",
-					'Save': function() {
-			      this.storage ('personal_ideas', {
-		          persist: false
-			      });
+					'onChosen': function() {
+						monogatari.storage().personal_ideas.persist = false;
 					}
 				}
 			}

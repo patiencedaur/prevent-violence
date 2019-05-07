@@ -1,5 +1,9 @@
 monogatari.label ('Episode1', [
   // Debug
+  function() {
+    console.log("Настойчивость: " + monogatari.storage().personal_ideas.persist);
+    console.log("Семью хочу-не могу: " + monogatari.storage().personal_ideas.family_important);
+  },
   'Семья - это важно: {{personal_ideas.family_important}}',
   'Настойчивость: {{personal_ideas.persist}}',
 
@@ -8,7 +12,7 @@ monogatari.label ('Episode1', [
   {
     // checkPersist
     'Conditional': {
-      'Condition': () => { return this.storage.personal_ideas.persist; },
+      'Condition': checkPersist,
       'True': 'jump HelpWithCoat',
       'False': 'jump AskAboutCoat'
     }
@@ -22,9 +26,6 @@ monogatari.label('AskAboutCoat', [
       'Yes': {
         'Text': 'Давай?',
         'Do': 'jump HelpWithCoat'
-        // 'onChosen': () => {
-        //   	alert("I'll write this to the database!");
-        //   }
       },
       'No': {
         'Text': 'Нет, разденусь сама',
@@ -47,7 +48,7 @@ monogatari.label ('CoatOff', [
   // checkFamily
   {
     'Conditional': {
-      'Condition': () => {  return this.storage.personal_ideas.family_important;  },
+      'Condition': checkFamily,
       'True': 'l Знаешь, я всегда мечтал о семье и детях. Хочу серьёзных отношений...',
       'False': 'l Меня восхищают сильные женщины!'
     }
@@ -96,7 +97,7 @@ monogatari.label ('Bill', [
 monogatari.label ('BegToPay', [
   {
     'Conditional': {
-      'Condition': () => {  return this.storage.personal_ideas.persist;  },
+      'Condition': checkPersist,
       'True': 'jump PersistAndPay',
       'False': 'jump SeeOff',
     }
@@ -114,7 +115,7 @@ monogatari.label ('SeeOff', [
   'Завтра как раз её концерт, но у тебя много дел в универе.',
   {
     'Conditional': {
-      'Condition': () => {  return this.storage.personal_ideas.persist;  },
+      'Condition': checkPersist,
       'True': 'jump CallTaxi',
       'False': 'jump AskToCallTaxi'
     }
@@ -123,7 +124,7 @@ monogatari.label ('SeeOff', [
 
 monogatari.label ('CallTaxi', [
   'l Я вызвал тебе такси до дома. Спасибо за чудесный вечер, красавица',
-  'jump GoingHome'
+  'jump GoingHomeTaxi'
 ]);
 
 monogatari.label ('AskToCallTaxi', [
@@ -137,14 +138,10 @@ monogatari.label ('AskToCallTaxi', [
       'No': {
         'Text': 'Нет, спасибо. Доберусь сама.',
         'Do': 'jump GoingHomeBus',
-        'Save': () => {
-          this.storage ('plot', {
-            episode1_taxi_called: false
-          });
+        'onChosen': () => { monogatari.storage().plot.episode1_taxi_called = false; }
         }
       }
     }
-  }
 ]);
 
 monogatari.label ('GoingHomeTaxi', [
@@ -177,11 +174,11 @@ monogatari.label ('Texting', [
     'Choice': {
       'Yes': {
         'Text': 'Да! Здорово, пойдём вместе!',
-        'Do': 'jump WhatAreYouDoing'
+        'Do': 'jump SeeYouLater'
       },
       'No': {
-        'Text': 'К сожалению, у меня столько домашки...',
-        'Do': 'jump GoodLuck'
+        'Text': 'Нет, к сожалению, не могу',
+        'Do': 'jump WhatAreYouDoing'
       }
     }
   }
@@ -203,9 +200,9 @@ monogatari.label ('WhatAreYouDoing', [
 monogatari.label ('TextCheckPersist', [
   {
     'Conditional': {
-      'Condition': () => {  return this.storage.personal_ideas.persist;  },
+      'Condition': checkPersist,
       'True': 'jump FollowUpMeetTomorrow',
-      'False': 'jump SeeYouLater'
+      'False': 'jump GoodLuck'
     }
   }
 ]);
@@ -227,21 +224,35 @@ monogatari.label ('FollowUpMeetTomorrow', [
 ]);
 
 monogatari.label ('TooBad', [
-  'l Что ж, жаль...',
+  'l Что ж, жаль.',
   'jump GoodNight'
 ])
 
 monogatari.label ('SeeYouLater', [
   'l С нетерпением жду завтрашней встречи!',
+  () => { monogatari.storage().plot.episode1_meeting = true;  },
   'jump GoodNight',
 ]);
 
 monogatari.label ('GoodLuck', [
-  'l Удачи в этом нелёгком деле!',
+  'l Бедняжка :( Удачи в этом нелёгком деле!',
   'jump GoodNight',
 ]);
 
 monogatari.label ('GoodNight', [
   'l Спокойной ночи!',
-  'end'
+  'jump Episode1A'
 ]);
+
+// Episode 1A
+
+monogatari.label ('Episode1A', [
+  {
+    'Condition': {
+      'Conditional': monogatari.storage().plot.episode1_meeting,
+      'True': 'Встретились: {{plot.episode1_meeting}}',
+      'False': 'Встретились: {{plot.episode1_meeting}}'
+    }
+  },
+  'end'
+])
