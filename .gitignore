@@ -31,3 +31,6 @@ release
 .conf
 .ftpconfig
 .sftpconfig
+
+# TODO file
+todo.txt
