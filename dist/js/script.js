@@ -9,6 +9,19 @@ function checkFamily() {
 	return monogatari.storage().personal_ideas.family_important;
 }
 
+function hadSex() {
+	return monogatari.storage().plot.had_sex;
+}
+
+function randomCondition() {
+	let ran = Math.random();
+	if (ran < 0.5) {
+		return True;
+	} else {
+		return False;
+	}
+}
+
 
 // Define the messages used in the game.
 monogatari.action ('Message').messages ({
@@ -73,6 +86,10 @@ monogatari.characters ({
 	'l': {
 		name: 'Алексей',
 		color: '#5bcaff'
+	},
+	'y': {
+		name: 'Ты',
+		color: '#ffca5b'
 	}
 });
 

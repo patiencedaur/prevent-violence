@@ -341,6 +341,10 @@ monogatari.label('ToHisPlace', [
 ]);
 
 monogatari.label ('FirstTime', [
+  () => {
+    monogatari.storage().plot.had_sex = true;
+    console.log("We had sex!");
+  },
   'Здесь будет картинка со спальней и красивый романтичный фэйдаут.',
   'Следующий уровень!',
   'jump Episode2'
