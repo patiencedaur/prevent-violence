@@ -248,11 +248,133 @@ monogatari.label ('GoodNight', [
 
 monogatari.label ('Episode1A', [
   {
-    'Condition': {
-      'Conditional': monogatari.storage().plot.episode1_meeting,
-      'True': 'Встретились: {{plot.episode1_meeting}}',
-      'False': 'Встретились: {{plot.episode1_meeting}}'
+    'Conditional': {
+      'Condition': monogatari.storage().plot.episode1_meeting,
+      'True': 'jump AgreedToMeet',
+      'False': 'jump NotAgreedToMeet'
     }
   },
-  'end'
+]);
+
+monogatari.label ('AgreedToMeet', [
+  'Вы встречаетесь на концерте, как и договаривались.',
+  'jump Concert'
+]);
+
+monogatari.label ('NotAgreedToMeet', [
+  'На следующий день вы случайно сталкиваетесь в толпе на концерте.',
+  'jump Concert'
+]);
+
+
+monogatari.label ('Concert', [
+  'Ты в восторге от исполнителей и подпеваешь всем песням!',
+  'Но вот концерт подходит к концу. Вы выходите из клуба.',
+  'Настаёт время прощания.',
+  {
+    'Conditional': {
+      'Condition': checkPersist,
+      'True': 'jump Kiss',
+      'False': 'jump MayIKissYou'
+    }
+  }
+]);
+
+monogatari.label ('MayIKissYou', [
+  'l Можно тебя поцеловать?',
+  {
+    'Choice': {
+      'Yes': {
+        'Text': 'Да',
+        'Do': 'jump Kiss'
+      },
+      'No': {
+        'Text': 'Не сейчас',
+        'Do': 'jump ByeAlone'
+      }
+    }
+  }
+]);
+
+monogatari.label ('Kiss', [
+  'Он обнимает и страстно целует тебя.',
+  'l Я вызвал такси. Едем ко мне?',
+  {
+    'Choice': {
+      'Yes': {
+        'Text': 'Да',
+        'Do': 'jump ToHisPlace'
+      },
+      'No': {
+        'Text': 'Нет, поеду домой',
+        'Do': 'jump CallAnotherTaxi'
+      }
+    }
+  }
+]);
+
+monogatari.label ('CallAnotherTaxi', [
+  'Он вызывает второе такси.',
+  'jump ByeAlone'
+]);
+
+monogatari.label ('ByeAlone', [
+  'Вы прощаетесь, и ты едешь домой.',
+  'jump Episode2'
+])
+
+monogatari.label('ToHisPlace', [
+  'Вы приезжаете к нему домой и сразу начинаете целоваться.',
+  'l Ты такая горячая. Хочу скорее заняться с тобой любовью.',
+  {
+    'Choice': {
+      'Yes': {
+        'Text': 'Я тоже, давай',
+        'Do': 'jump FirstTime'
+      },
+      'No': {
+        'Text': 'Я не хочу...',
+        'Do': 'jump CheckDynamo'
+      }
+    }
+  }
+]);
+
+monogatari.label ('FirstTime', [
+  'Здесь будет картинка со спальней и красивый романтичный фэйдаут.',
+  'Следующий уровень!',
+  'jump Episode2'
+]);
+
+monogatari.label('CheckDynamo', [
+  {
+    'Conditional': {
+      'Condition': checkPersist,
+      'True': 'jump Dynamo',
+      'False': 'jump Pout'
+    }
+  }
+]);
+
+monogatari.label ('Dynamo', [
+  'l Ну не ломайся, мы же уже приехали...',
+  'l Не будь таким динамо.',
+  {
+    'Choice': {
+      'Yes': {
+        'Text': 'Ну ладно',
+        'Do': 'jump FirstTime'
+      },
+      'No': {
+        'Text': 'Нет, я же говорю - не хочу',
+        'Do': 'jump Pout'
+      }
+    }
+  }
+]);
+
+monogatari.label ('Pout', [
+  'Он насупился и обиделся.',
+  '(Ты вызываешь себе такси и уезжаешь?)',
+  'jump Episode2'
 ])
