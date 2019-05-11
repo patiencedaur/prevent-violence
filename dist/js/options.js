@@ -23,7 +23,7 @@ monogatari.settings({
 	'Version': '0.1.0',
 
 	// Initial Label *
-	'Label': 'Dancing',
+	'Label': 'Start',
 
 	// Number of AutoSave Slots
 	'Slots': 10,
