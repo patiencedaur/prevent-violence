@@ -1,13 +1,13 @@
 {
-  "name": "my-game",
+  "name": "prevent-violence",
   "version": "0.1.0",
   "main": "engine/electron/index.js",
-  "description": "A description of your game",
-  "author": "Your Name",
+  "description": "Визуальная новелла против домашнего насилия",
+  "author": "Anastasia Maskaeva, Alina Kugush, Patience Daur",
   "license": "MIT",
   "homepage": "https://example.com",
   "build": {
-    "appId": "com.example.mygame",
+    "appId": "com.github.patiencedaur.preventviolence",
     "win": {
       "target": [
         "nsis"
