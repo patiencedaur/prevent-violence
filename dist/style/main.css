@@ -201,3 +201,6 @@ input[type=range]::-ms-fill-upper {
 
 	}
 }
+[data-content="text"] p {
+    padding: 0 1rem;
+}
