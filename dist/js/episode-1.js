@@ -123,7 +123,7 @@ monogatari.label ('SeeOff', [
 ]);
 
 monogatari.label ('CallTaxi', [
-  'l Я вызвал тебе такси до дома. Спасибо за чудесный вечер, красавица',
+  'l Я вызвал тебе такси до дома. Спасибо за чудесный вечер, красавица.',
   'jump GoingHomeTaxi'
 ]);
 
@@ -174,7 +174,7 @@ monogatari.label ('Texting', [
     'Choice': {
       'Yes': {
         'Text': 'Да! Здорово, пойдём вместе!',
-        'Do': 'jump SeeYouLater'
+        'Do': 'jump SeeYouLater',
       },
       'No': {
         'Text': 'Нет, к сожалению, не могу',
@@ -213,7 +213,7 @@ monogatari.label ('FollowUpMeetTomorrow', [
     'Choice': {
       'Yes': {
         'Text': 'Давай попробуем!',
-        'Do': 'jump SeeYouLater'
+        'Do': 'jump SeeYouLater',
       },
       'No': {
         'Text': 'Нет, мне никак :(',
@@ -229,8 +229,10 @@ monogatari.label ('TooBad', [
 ])
 
 monogatari.label ('SeeYouLater', [
+  () => {
+    monogatari.storage().plot.episode1_meeting = true;
+  },
   'l С нетерпением жду завтрашней встречи!',
-  () => { monogatari.storage().plot.episode1_meeting = true;  },
   'jump GoodNight',
 ]);
 
@@ -249,13 +251,13 @@ monogatari.label ('GoodNight', [
 monogatari.label ('Episode1A', [
   {
     'Conditional': {
-      'Condition': monogatari.storage().plot.episode1_meeting,
+      'Condition': () => { return monogatari.storage().plot.episode1_meeting; },
       'True': 'jump AgreedToMeet',
       'False': 'jump NotAgreedToMeet'
     }
   },
 ]);
-
+// bug
 monogatari.label ('AgreedToMeet', [
   'Вы встречаетесь на концерте, как и договаривались.',
   'jump Concert'

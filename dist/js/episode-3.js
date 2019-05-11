@@ -40,6 +40,9 @@ monogatari.label('AskMe', [
       'CancelMeeting': {
           'Text': 'Ок, тогда я отменю.',
           'Do': 'jump NextMorning',
+          'onChosen': () => {
+            monogatari.storage().plot.episode3_my_fault = true;
+          }
       },
       'ImGoing': {
           'Text': 'Мои друзья &mdash; не тупые.',
@@ -77,7 +80,7 @@ monogatari.label('PleaseStayHome', [
 monogatari.label('IMissYou', [
   'l Просто я очень соскучился...',
   'l Я так рад, что ты поступаешь правильно, любимая. Проведём выходной вместе.',
-  'jump NextMorning'
+  'jump Episode3A'
 ]);
 
 monogatari.label('Forbid', [
@@ -178,6 +181,7 @@ monogatari.label('NextMorning', [
   () => {
     console.log("upset = " + monogatari.storage().plot.episode3_got_upset);
     console.log("phone broken = " + monogatari.storage().plot.episode3_phone_broken);
+    console.log("you said it's your fault = " + monogatari.storage().plot.episode3_my_fault);
   },
   'Утро следующего дня...',
   {
@@ -203,8 +207,21 @@ monogatari.label('FlowersOnly', [
   	   'Condition': function(){
     	   return monogatari.storage().plot.episode3_got_upset;
   	   },
-  	    'True': 'jump SorryDarlingGotUpset',
+  	    'True': 'jump MyFaultCheck',
   	    'False': 'jump ThisIsForYou',
+    }
+  },
+]);
+
+//check if it's your fault!
+monogatari.label('MyFaultCheck', [
+  {
+    'Conditional': {
+  	   'Condition': () => {
+    	   return monogatari.storage().plot.episode3_my_fault;
+  	   },
+  	    'True': 'jump ThisIsForYou',
+  	    'False': 'jump SorryDarlingGotUpset',
     }
   },
 ]);
@@ -222,10 +239,13 @@ monogatari.label('ThisIsForYou', [
       'Accept': {
           'Text': 'Принять подарок',
           'Do': 'jump AcceptGift',
-      },
+      },// bug
       'Reject': {
           'Text': 'Отказаться',
           'Do': 'jump RejectGift',
+          'Condition': () => {
+            return !monogatari.storage().plot.episode3_my_fault;
+          }
       }
     }
   },
@@ -303,24 +323,6 @@ monogatari.label('Hit', [
   'jump Worst',
 ]);
 
-/************/
-/* Концовки */
-/************/
-
-monogatari.label('Good', [
-  'show message GoodEnding',
-  'end'
-]);
-
-monogatari.label('Bad', [
-  'show message BadEnding',
-  'end'
-]);
-
-monogatari.label('Worst', [
-  'show message WorstEnding',
-  'end'
-]);
 
 /******************/
 /* Полгода вместе */
@@ -394,4 +396,24 @@ monogatari.label('ILoveMyJob', [
 monogatari.label('TalkToYouLater', [
   'y Не кипятись, ты устал. Давай позже обсудим. Я подумаю об этом.',
   'jump Bad'
+]);
+
+
+/************/
+/* Концовки */
+/************/
+
+monogatari.label('Good', [
+  'show message GoodEnding',
+  'end'
+]);
+
+monogatari.label('Bad', [
+  'show message BadEnding',
+  'end'
+]);
+
+monogatari.label('Worst', [
+  'show message WorstEnding',
+  'end'
 ]);

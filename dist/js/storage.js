@@ -9,10 +9,11 @@ monogatari.storage ({
 
 	plot: {
 		had_sex: false,
-		episode1_taxi_called: true,
+		episode1_taxi_called: false,
 		episode1_meeting: false,
 		episode2_dress: false,
 		episode3_got_upset: false,
 		episode3_phone_broken: false,
+		episode3_my_fault: false,
 	}
 });
