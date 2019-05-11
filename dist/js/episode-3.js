@@ -39,7 +39,7 @@ monogatari.label('AskMe', [
     'Choice': {
       'CancelMeeting': {
           'Text': 'Ок, тогда я отменю.',
-          'Do': 'jump NextMorning', //The next line of Monogatari script if the button is pressed. Can be any monogatari action, such as a jump, a regular line of dialogue, or it could be nested choices or conditions, etc. Can't be a function. Use onChosen for that.
+          'Do': 'jump NextMorning',
       },
       'ImGoing': {
           'Text': 'Мои друзья &mdash; не тупые.',
