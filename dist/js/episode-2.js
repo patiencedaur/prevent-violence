@@ -135,7 +135,7 @@ monogatari.label('Ep2Randomizer', [
 ]);
 
 monogatari.label('Ep2Arguing', [
-  'y Никуда я не смотрела! Ты меня на пустом месте подозреваешь.',
+  'y Неправда! Ты меня на пустом месте подозреваешь.',
   'jump Ep2SexCheck'
 ]);
 
