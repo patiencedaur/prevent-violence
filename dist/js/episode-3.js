@@ -40,9 +40,6 @@ monogatari.label('AskMe', [
       'CancelMeeting': {
           'Text': 'Ок, тогда я отменю.',
           'Do': 'jump NextMorning',
-          'onChosen': () => {
-            monogatari.storage().plot.episode3_my_fault = true;
-          }
       },
       'ImGoing': {
           'Text': 'Мои друзья &mdash; не тупые.',
@@ -136,6 +133,7 @@ monogatari.label('YouProvokedMe', [
 
 monogatari.label('Push', [
   'y Отпусти меня!',
+  ep3GotUpset,
   'Он с силой толкает тебя на пол.',
   'l Я сказал, сядь!',
   'jump NextMorning'
@@ -149,7 +147,6 @@ monogatari.label('ImJustNervous', [
 
 monogatari.label('GrabPhone', [
   'Он хватает тебя за руку и отнимает телефон.',
-  ep3GotUpset,
   {
     'Choice': {
       'LetMeGo': {
@@ -168,6 +165,7 @@ monogatari.label('BreakPhone', [
   () => {
     monogatari.storage().plot.episode3_phone_broken = true;
   },
+  ep3GotUpset,
   'Он кидает твой телефон об стену.',
   'Телефон разбивается.',
   'jump NextMorning'
@@ -181,7 +179,6 @@ monogatari.label('NextMorning', [
   () => {
     console.log("upset = " + monogatari.storage().plot.episode3_got_upset);
     console.log("phone broken = " + monogatari.storage().plot.episode3_phone_broken);
-    console.log("you said it's your fault = " + monogatari.storage().plot.episode3_my_fault);
   },
   'Утро следующего дня...',
   {
@@ -207,21 +204,8 @@ monogatari.label('FlowersOnly', [
   	   'Condition': function(){
     	   return monogatari.storage().plot.episode3_got_upset;
   	   },
-  	    'True': 'jump MyFaultCheck',
+  	    'True': 'jump SorryDarlingGotUpset',
   	    'False': 'jump ThisIsForYou',
-    }
-  },
-]);
-
-//check if it's your fault!
-monogatari.label('MyFaultCheck', [
-  {
-    'Conditional': {
-  	   'Condition': () => {
-    	   return monogatari.storage().plot.episode3_my_fault;
-  	   },
-  	    'True': 'jump ThisIsForYou',
-  	    'False': 'jump SorryDarlingGotUpset',
     }
   },
 ]);
@@ -244,7 +228,7 @@ monogatari.label('ThisIsForYou', [
           'Text': 'Отказаться',
           'Do': 'jump RejectGift',
           'Condition': () => {
-            return !monogatari.storage().plot.episode3_my_fault;
+            return !monogatari.storage().plot.episode3_got_upset;
           }
       }
     }
@@ -252,6 +236,16 @@ monogatari.label('ThisIsForYou', [
 ]);
 
 monogatari.label('AcceptGift', [
+  { // check if forgiveness is needed
+    'Conditional': {
+  	    'Condition': ep3GotUpset,
+  	    'True': 'jump DontDoThisAgain', //If the above function returns the key, it will play the corresponding Monogatari action, such as saying something or jumping, or playing a sound or whatever.
+  	    'False': 'jump Hugs',
+    }
+  },
+]);
+
+monogatari.label('DontDoThisAgain', [
   'y Спасибо. Я всё понимаю, но больше так не делай.',
   'jump Hugs',
 ]);
