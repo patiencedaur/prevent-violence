@@ -228,7 +228,7 @@ monogatari.label('ThisIsForYou', [
           'Text': 'Отказаться',
           'Do': 'jump RejectGift',
           'Condition': () => {
-            return !monogatari.storage().plot.episode3_got_upset;
+            return monogatari.storage().plot.episode3_got_upset;
           }
       }
     }
