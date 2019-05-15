@@ -30,14 +30,6 @@ function randomCondition() {
 
 // Define the messages used in the game.
 monogatari.action ('Message').messages ({
-	'Help': {
-		title: 'В помощь программистке',
-		subtitle: 'Полезные ссылки',
-		body: `
-			<p><a href='https://monogatari.io/documentation/'>Документация</a> - ничего лишнего, это точно.</p>
-			<p><a href='https://monogatari.io/demo/'>Демо</a> - демо-игра.</p>
-		`
-	},
 	'GoodEnding': {
 		title: 'Тебе удалось вовремя распознать насилие',
 		subtitle: '',
