@@ -213,7 +213,7 @@ input[type=range]::-ms-fill-upper {
 }
 
 /* Background picture */
-main-screen {
+[data-component="main-screen"] {
 	background: #eeddbb;
 	background-image: url("../assets/images/splash.jpg");
 	background-size: cover;
