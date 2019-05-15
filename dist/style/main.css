@@ -202,10 +202,19 @@ input[type=range]::-ms-fill-upper {
 	}
 }
 
+/* Remove excessive padding after character name */
 [data-content="text"] p {
     padding: 0 1rem;
 }
 
+/* Remove unnecessary buttons */
 [data-action="back"], [data-action="distraction-free"], [data-action="auto-play"] {
 	display: none;
+}
+
+/* Background picture */
+main-screen {
+	background: #eeddbb;
+	background-image: url("../assets/images/splash.jpg");
+	background-size: cover;
 }
