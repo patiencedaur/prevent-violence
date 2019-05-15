@@ -201,6 +201,11 @@ input[type=range]::-ms-fill-upper {
 
 	}
 }
+
 [data-content="text"] p {
     padding: 0 1rem;
+}
+
+[data-action="back"], [data-action="distraction-free"], [data-action="auto-play"] {
+	display: none;
 }
