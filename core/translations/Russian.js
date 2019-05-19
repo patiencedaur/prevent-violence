@@ -13,7 +13,7 @@ import { Monogatari } from './../monogatari';
 
 Monogatari.translation('Русский', {
 	'AdvanceHelp': 'Чтобы играть, нажимайте на пробел или на левую кнопку мыши.',
-	'AllowPlayback': 'Включить звук',
+	'AllowPlayback': 'Включить звуковое сопровождение',
 	'Audio': 'Звук',
 	'AutoPlay': 'Авто',
 	'AutoPlayButton': 'Включить авточтение',
@@ -28,7 +28,7 @@ Monogatari.translation('Русский', {
 	'Credits': 'Авторы',
 
 	'Delete': 'Удалить',
-	'DialogLogButton': 'Журнал диалогов',
+	'DialogLogButton': 'Показать журнал диалогов',
 
 	'FullScreen': 'Полный экран',
 
@@ -76,10 +76,10 @@ Monogatari.translation('Русский', {
 	'SettingsButton': 'Открыть меню настроек',
 	'Show': 'Показать',
 	'Skip': 'Пропустить',
-	'SkipButton': 'Включить режим пропускания',
+	'SkipButton': 'Автопереход',
 	'SlotDeletion': 'Вы действительно хотите удалить это сохранение?',
 	'SlotOverwrite': 'Вы действительно хотите перезаписать это сохранение?',
-	'Sound': 'Громкость звука',
+	'Sound': 'Громкость эффектов',
 	'Start': 'Начать игру',
 	'Stop': 'Стоп',
 
