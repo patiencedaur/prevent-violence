@@ -118,6 +118,25 @@ monogatari.characters ({
 	}
 });
 
+// Help button
+
+monogatari.component ('quick-menu').addButton ({
+    string: 'Help me!',
+    icon: 'fas fa-hands-helping',
+    data: {
+        action: 'stats'
+    }
+});
+
+monogatari.translation ('English', {
+    'Help me!': 'Help me!'
+});
+
+monogatari.translation ('Русский', {
+    'Help me!': 'Помощь!'
+});
+
+
 monogatari.script ({
 	// The game starts here.
 	"Start": [
