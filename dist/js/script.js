@@ -118,6 +118,9 @@ monogatari.characters ({
 	}
 });
 
+// TODO if values are chosen, show the buttons. otherwise - no
+// where does the data-jump go? establish an understanding of 'stat system'
+
 // Help button
 
 monogatari.component ('quick-menu').addButton ({
@@ -136,6 +139,27 @@ monogatari.translation ('Русский', {
     'Help me!': 'Помощь!'
 });
 
+
+// Exit button
+// (Monogatari exit button is called 'Quit')
+
+monogatari.component ('quick-menu').addButton ({
+    string: 'Exit',
+    icon: 'fas fa-door-open',
+    data: {
+        action: 'exit'
+    }
+});
+
+monogatari.translation ('English', {
+    'Exit': 'Exit'
+});
+
+monogatari.translation ('Русский', {
+    'Exit': 'Выйти'
+});
+
+// Story begins
 
 monogatari.script ({
 	// The game starts here.
