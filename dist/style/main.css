@@ -11,11 +11,6 @@
  * =============================================================================
 **/
 
-/**
- * ===========================
- * General Styling
- * ===========================
-**/
 
 /* General Style */
 body {
@@ -208,7 +203,9 @@ input[type=range]::-ms-fill-upper {
 }
 
 /* Remove unnecessary buttons */
-[data-action="back"], [data-action="distraction-free"], [data-action="auto-play"] {
+[data-action="back"], [data-action="distraction-free"],
+[data-action="auto-play"], [data-action="dialog-log"],
+[data-string="Save"], [data-string="Load"], [data-open="load"] {
 	display: none;
 }
 
