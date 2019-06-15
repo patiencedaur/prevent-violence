@@ -11,19 +11,6 @@
  * =============================================================================
 **/
 
-/* Stats Button Style */
-
-exit-modal .modal__content {
- flex-direction: column;
-}
-
-exit-modal .modal__content div {
- width: 100%;
- display: flex;
- justify-content: space-between;
- margin: 0.5rem auto;
-}
-
 /* General Style */
 body {
 	font-size: 1.2rem;

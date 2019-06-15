@@ -60,6 +60,7 @@ monogatari.action ('Message').messages ({
 	}
 });
 
+
 // Define the notifications used in the game
 monogatari.action ('Notification').notifications ({
 	'Welcome': {
@@ -172,3 +173,8 @@ monogatari.script ({
 		}
 	]
 });
+
+monogatari.label('Help', [
+	'Тебе звонит подруга.',
+	'end'
+]);
