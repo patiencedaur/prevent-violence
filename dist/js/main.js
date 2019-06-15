@@ -5,15 +5,17 @@
  **/
 
 'use strict';
-/* global Monogatari */
+
 /* global monogatari */
 
 const { $_ready } = Monogatari;
 
 // monogatari.debug.level (5);
 
-// Stats button
-monogatari.registerComponent (StatsModal);
+// Exit Relationship button
+monogatari.registerComponent (ExitModal);
+// Help button
+// monogatari.registerComponent (HelpModal);
 
 $_ready (() => {
 	monogatari.init ('#monogatari');

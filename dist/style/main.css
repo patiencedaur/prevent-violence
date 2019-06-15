@@ -13,11 +13,11 @@
 
 /* Stats Button Style */
 
-stats-modal .modal__content {
+exit-modal .modal__content {
  flex-direction: column;
 }
 
-stats-modal .modal__content div {
+exit-modal .modal__content div {
  width: 100%;
  display: flex;
  justify-content: space-between;
@@ -215,9 +215,10 @@ input[type=range]::-ms-fill-upper {
 }
 
 /* Remove unnecessary buttons */
-[data-action="back"], [data-action="distraction-free"],
+[data-action="distraction-free"],
 [data-action="auto-play"], [data-action="dialog-log"],
-[data-string="Save"], [data-string="Load"], [data-open="load"] {
+[data-open="save"], [data-open="load"],
+[data-action="end"] {
 	display: none;
 }
 
