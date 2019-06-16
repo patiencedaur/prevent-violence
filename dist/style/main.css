@@ -201,8 +201,11 @@ input[type=range]::-ms-fill-upper {
     padding: 0 1rem;
 }
 
-/* Remove unnecessary buttons */
+/* Remove unnecessary buttons.
+   Remove buggy Back button from dialog screen,
+	 but preserve it in Settings. */
 [data-action="distraction-free"],
+[data-component="quick-menu"] > [data-action="back"],
 [data-action="auto-play"], [data-action="dialog-log"],
 [data-open="save"], [data-open="load"],
 [data-action="end"] {
