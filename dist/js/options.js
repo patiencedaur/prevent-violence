@@ -20,7 +20,7 @@ monogatari.settings({
 	'Name': 'Куда движутся отношения',
 
 	// The version of your game in semantic versioning (https://semver.org/).
-	'Version': '0.2.4',
+	'Version': '0.3.0',
 
 	// Initial Label *
 	'Label': 'Start',
