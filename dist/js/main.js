@@ -48,6 +48,16 @@ monogatari.component ('quick-menu').addButtonAfter ('Hide', {
   }
 });
 
+// Friend sms: test
+
+monogatari.translation ('English', {
+  'SMS': 'SMS'
+});
+monogatari.translation ('Русский', {
+  'SMS': 'SMS'
+});
+
+
 $_ready (() => {
 	monogatari.init ('#monogatari');
 });

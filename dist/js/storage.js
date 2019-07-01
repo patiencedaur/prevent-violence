@@ -15,5 +15,8 @@ monogatari.storage ({
 		episode2_dress: false,
 		episode3_got_upset: false,
 		episode3_phone_broken: false,
-	}
+	},
+
+	// SMS button control
+	friend_sms_unread: false
 });

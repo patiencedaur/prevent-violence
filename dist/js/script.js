@@ -21,9 +21,9 @@ function ep3GotUpset() {
 function randomCondition() {
 	let ran = Math.random();
 	if (ran < 0.5) {
-		return True;
+		return true;
 	} else {
-		return False;
+		return false;
 	}
 }
 
@@ -57,18 +57,14 @@ monogatari.action ('Message').messages ({
 			<p>В следующий раз всё повторяется вновь...</p>
 			<p><a href="https://vk.com/im?media=&sel=-29881876">Чат-бот &laquo;Индекс насилия в отношениях&raquo;</a></p>
 		`
+	},
+	'FriendHi': {
+		title: 'Привет, это Оля',
+		subtitle: 'Как дела?',
+		body: 'Я чую домашнее насилие!'
 	}
 });
 
-
-// Define the notifications used in the game
-monogatari.action ('Notification').notifications ({
-	'Welcome': {
-		title: 'Привет!',
-		body: 'Перед тобой игра для предупреждения домашнего насилия',
-		icon: ''
-	}
-});
 
 // Define the Particles JS Configurations used in the game
 monogatari.action ('Particles').particles ({
@@ -174,7 +170,76 @@ monogatari.script ({
 	]
 });
 
+/*** Test the sms button ***/
+
+// Helper functions
+
+function makeSmsButton() {
+	monogatari.component ('quick-menu').addButtonAfter ('Hide', {
+	  string: 'SMS',
+	  icon: 'fas fa-envelope',
+	  data: {
+	    action: 'jump',
+	    jump: 'SmsYes',
+	  }
+	});
+}
+
+function removeSmsButton() {
+	monogatari.component('quick-menu').removeButton('SMS');
+}
+
+// Called via Help button
+
 monogatari.label('Help', [
 	'Тебе звонит подруга.',
-	'end'
+	{
+	  'Choice': {
+	    'FirstOption': {
+	        'Text': 'Прочесть смс',
+	        'Do': 'jump SmsYes',
+	    },
+	    'SecondOption': {
+	        'Text': 'Забить',
+					'onChosen': () => {
+						monogatari.storage().friend_sms_unread = true;
+					},
+	        'Do': 'jump SmsNo',
+	    }
+	  }
+	}
+]);
+
+monogatari.label('SmsYes', [
+	'show message FriendHi',
+	{
+	  'Conditional': {
+		   'Condition': function(){
+	  	   return monogatari.storage().friend_sms_unread;
+		   },
+		    'True': {'Function': {
+					'Apply': () => {
+						removeSmsButton();
+						monogatari.storage().friend_sms_unread = false;
+						return true;
+					},
+					'Reverse': () => {
+						makeSmsButton();
+						monogatari.storage().friend_sms_unread = true;
+						return true;
+					}
+				}
+				},
+		    'False': 'next',
+	  }
+	},
+	'Мы прочли подругину смску. Кнопка не нужна, если она есть, убираем её.',
+	'jump Start'
+]);
+
+monogatari.label('SmsNo', [
+	makeSmsButton,
+	'Мы не прочли подругину смску. Она маячит в непрочитанных.',
+	'Сейчас есть кнопка, и она будет висеть, пока мы не прочтём смс.',
+	'jump Start'
 ]);
