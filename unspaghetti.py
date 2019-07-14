@@ -25,7 +25,8 @@ file_mask = '^(?:(?!options)(?!main)(?!storage).)*?\.js$'
 # jump directive with next label name
 regex_jump = 'jump \w+'
 # monogatari.label(SOMETHING]);
-# Do not use spaces before the opening bracket after monogatari.label in the code.
+# Do not use spaces before the opening bracket after monogatari.label in the code
+# it doesn't work for whatever reason
 regex_label = 'monogatari\.label\s?\(.*?\]\);?'
 # monogatari.script({SOMETHING});
 regex_script = 'monogatari\.script\s?\(\{.*?\}\);'
@@ -111,3 +112,7 @@ def print_schema(folder):
         print()
 
 print_schema(folder)
+
+# Export to Graphviz:
+# label1 -> jump11, label1 -> jump12, label1 -> jump13...
+# label2 -> jump21, label3 -> jump22...

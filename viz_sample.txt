@@ -1,0 +1,41 @@
+# http://www.graphviz.org/content/cluster
+
+digraph G {
+
+	subgraph Start {
+		node [style=filled,color=yellow];
+		Start -> QuestionFamily;
+    QuestionFamily -> QuestionPersistence;
+    QuestionFamily -> QuestionPersistence;
+    QuestionPersistence -> Episode1;
+    QuestionPersistence -> Episode1;
+		Help -> SmsYes;
+    Help -> SmsNo;
+    SmsYes -> Start;
+    SmsNo -> Start;
+		label = "Start";
+	}
+
+	subgraph Episode1 {
+		node [style=filled, color=green];
+		Episode1 -> HelpWithCoat;
+    Episode1 -> AskAboutCoat;
+    AskAboutCoat -> HelpWithCoat;
+    AskAboutCoat -> Episode2;
+    HelpWithCoat -> Episode2;
+	}
+
+  subgraph Episode2 {
+    node [style=filled, color=pink];
+    Episode2 -> Party;
+    Episode2 -> Party;
+    Party -> LetsDance;
+    LetsDance -> Dancing;
+    LetsDance;
+    label = "Episode #2";
+  }
+
+  LetsDance -> end;
+
+	end [shape=Msquare];
+}
