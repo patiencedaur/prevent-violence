@@ -1,4 +1,4 @@
-monogatari.label ('Episode1', [
+monogatari.label('Episode1', [
   // Debug
   function() {
     console.log("Настойчивость: " + monogatari.storage().personal_ideas.persist);
@@ -35,12 +35,12 @@ monogatari.label('AskAboutCoat', [
   }
 ])
 
-monogatari.label ('HelpWithCoat', [
+monogatari.label('HelpWithCoat', [
   'Он снимает с тебя пальто, и вы садитесь за столик.',
   'jump CoatOff'
 ])
 
-monogatari.label ('CoatOff', [
+monogatari.label('CoatOff', [
   'show scene #f7f6f6 with fadeIn',
   'Вы мило говорите о том, о сём.',
   'Постепенно вы узнаёте друг друга лучше, и разговор переходит на серьёзные темы.',
@@ -70,14 +70,14 @@ monogatari.label ('CoatOff', [
   }
 ])
 
-monogatari.label ('KickOthers', [
+monogatari.label('KickOthers', [
   //'show message Help',
   'show scene #f7f6f6 with fadeIn',
   'Твой спутник идёт разбираться с соседями и угрожает им рукоприкладством.',
   'jump Bill',
 ]);
 
-monogatari.label ('Bill', [
+monogatari.label('Bill', [
   'Вы обсуждаете его работу, твой универ, стараетесь не говорить о политике...',
   'Приносят счёт. Он предлагает взять оплату на себя.',
   {
@@ -94,7 +94,7 @@ monogatari.label ('Bill', [
   }
 ]);
 
-monogatari.label ('BegToPay', [
+monogatari.label('BegToPay', [
   {
     'Conditional': {
       'Condition': checkPersist,
@@ -104,13 +104,13 @@ monogatari.label ('BegToPay', [
   }
 ]);
 
-monogatari.label ('PersistAndPay', [
+monogatari.label('PersistAndPay', [
   'l Ни в коем случае, я заплачу.',
   'Несмотря на твой протест, твой спутник оплачивает счёт.',
   'jump SeeOff'
 ]);
 
-monogatari.label ('SeeOff', [
+monogatari.label('SeeOff', [
   'Вы выходите из кафе, обсуждая твою любимую группу Poison Wing.',
   'Завтра как раз её концерт, но у тебя много дел в универе.',
   {
@@ -122,12 +122,12 @@ monogatari.label ('SeeOff', [
   }
 ]);
 
-monogatari.label ('CallTaxi', [
+monogatari.label('CallTaxi', [
   'l Я вызвал тебе такси до дома. Спасибо за чудесный вечер, красавица.',
   'jump GoingHomeTaxi'
 ]);
 
-monogatari.label ('AskToCallTaxi', [
+monogatari.label('AskToCallTaxi', [
   'l Спасибо за чудесный вечер. Вызвать тебе такси до дома?',
   {
     'Choice': {
@@ -144,17 +144,17 @@ monogatari.label ('AskToCallTaxi', [
     }
 ]);
 
-monogatari.label ('GoingHomeTaxi', [
+monogatari.label('GoingHomeTaxi', [
   'Вы прощаетесь. Подъезжает такси, ты садишься и едешь домой.',
   'jump EnterHome',
 ]);
 
-monogatari.label ('GoingHomeBus', [
+monogatari.label('GoingHomeBus', [
   'Вы прощаетесь. Подъезжает автобус, ты садишься и едешь домой.',
   'jump EnterHome',
 ]);
 
-monogatari.label ('EnterHome', [
+monogatari.label('EnterHome', [
   'Как только ты открываешь дверь квартиры, тебе приходит смс:',
   'l Как добралась?',
   {
@@ -167,7 +167,7 @@ monogatari.label ('EnterHome', [
   }
 ]);
 
-monogatari.label ('Texting', [
+monogatari.label('Texting', [
   'l Ещё раз спасибо за прекрасный вечер!',
   'l Увидимся завтра на концерте Poison Wing?',
   {
@@ -184,7 +184,7 @@ monogatari.label ('Texting', [
   }
 ]);
 
-monogatari.label ('WhatAreYouDoing', [
+monogatari.label('WhatAreYouDoing', [
   'l Чем занимаешься?',
   {
     'Choice': {
@@ -197,7 +197,7 @@ monogatari.label ('WhatAreYouDoing', [
 ]);
 
 // Helper that checks for 'persist' and chooses further branch of dialogue.
-monogatari.label ('TextCheckPersist', [
+monogatari.label('TextCheckPersist', [
   {
     'Conditional': {
       'Condition': checkPersist,
@@ -207,7 +207,7 @@ monogatari.label ('TextCheckPersist', [
   }
 ]);
 
-monogatari.label ('FollowUpMeetTomorrow', [
+monogatari.label('FollowUpMeetTomorrow', [
   'l Давай всё-таки увидимся завтра? :))))',
   {
     'Choice': {
@@ -223,12 +223,12 @@ monogatari.label ('FollowUpMeetTomorrow', [
   }
 ]);
 
-monogatari.label ('TooBad', [
+monogatari.label('TooBad', [
   'l Что ж, жаль.',
   'jump GoodNight'
 ])
 
-monogatari.label ('SeeYouLater', [
+monogatari.label('SeeYouLater', [
   () => {
     monogatari.storage().plot.episode1_meeting = true;
   },
@@ -236,19 +236,19 @@ monogatari.label ('SeeYouLater', [
   'jump GoodNight',
 ]);
 
-monogatari.label ('GoodLuck', [
+monogatari.label('GoodLuck', [
   'l Бедняжка :( Удачи в этом нелёгком деле!',
   'jump GoodNight',
 ]);
 
-monogatari.label ('GoodNight', [
+monogatari.label('GoodNight', [
   'l Спокойной ночи!',
   'jump Episode1A'
 ]);
 
 // Episode 1A
 
-monogatari.label ('Episode1A', [
+monogatari.label('Episode1A', [
   {
     'Conditional': {
       'Condition': () => { return monogatari.storage().plot.episode1_meeting; },
@@ -257,13 +257,13 @@ monogatari.label ('Episode1A', [
     }
   },
 ]);
-// bug
-monogatari.label ('AgreedToMeet', [
+
+monogatari.label('AgreedToMeet', [
   'Вы встречаетесь на концерте, как и договаривались.',
   'jump Concert'
 ]);
 
-monogatari.label ('NotAgreedToMeet', [
+monogatari.label('NotAgreedToMeet', [
   'На следующий день тебе удалось пораньше разделаться с рефератом.',
   'Ты радостно идёшь на концерт любимой группы.',
   'И вот сюрприз &mdash; вы случайно сталкиваетесь в толпе на концерте!',
@@ -271,7 +271,7 @@ monogatari.label ('NotAgreedToMeet', [
 ]);
 
 
-monogatari.label ('Concert', [
+monogatari.label('Concert', [
   'Ты в восторге от исполнителей и подпеваешь всем песням.',
   'Но вот концерт подходит к концу. Вы выходите из клуба.',
   'Настаёт время прощания.',
@@ -284,7 +284,7 @@ monogatari.label ('Concert', [
   }
 ]);
 
-monogatari.label ('MayIKissYou', [
+monogatari.label('MayIKissYou', [
   'l Можно тебя поцеловать?',
   {
     'Choice': {
@@ -300,7 +300,7 @@ monogatari.label ('MayIKissYou', [
   }
 ]);
 
-monogatari.label ('Kiss', [
+monogatari.label('Kiss', [
   'Он обнимает и страстно целует тебя.',
   'l Я вызвал такси. Едем ко мне?',
   {
@@ -317,12 +317,12 @@ monogatari.label ('Kiss', [
   }
 ]);
 
-monogatari.label ('CallAnotherTaxi', [
+monogatari.label('CallAnotherTaxi', [
   'Он вызывает второе такси.',
   'jump ByeAlone'
 ]);
 
-monogatari.label ('ByeAlone', [
+monogatari.label('ByeAlone', [
   'Вы прощаетесь, и ты едешь домой.',
   'jump Episode2'
 ])
@@ -344,7 +344,7 @@ monogatari.label('ToHisPlace', [
   }
 ]);
 
-monogatari.label ('FirstTime', [
+monogatari.label('FirstTime', [
   () => {
     monogatari.storage().plot.had_sex = true;
     console.log("We had sex!");
@@ -364,7 +364,7 @@ monogatari.label('CheckDynamo', [
   }
 ]);
 
-monogatari.label ('Dynamo', [
+monogatari.label('Dynamo', [
   'l Ну не ломайся, мы же уже приехали...',
   'l Не будь таким динамо.',
   {
@@ -381,7 +381,7 @@ monogatari.label ('Dynamo', [
   }
 ]);
 
-monogatari.label ('Pout', [
+monogatari.label('Pout', [
   'Он насупился и обиделся.',
   '(Ты вызываешь себе такси и уезжаешь?)',
   'jump Episode2'
