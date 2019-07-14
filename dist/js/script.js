@@ -1,33 +1,5 @@
 /* global monogatari */
 
-// Functions to check player choices.
-function checkPersist() {
-	return monogatari.storage().personal_ideas.persist;
-}
-
-function checkFamily() {
-	return monogatari.storage().personal_ideas.family_important;
-}
-
-function hadSex() {
-	return monogatari.storage().plot.had_sex;
-}
-
-function ep3GotUpset() {
-	monogatari.storage().plot.episode3_got_upset = true;
-	return;
-}
-
-function randomCondition() {
-	let ran = Math.random();
-	if (ran < 0.5) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-
 // Define the messages used in the game.
 monogatari.action ('Message').messages ({
 	'GoodEnding': {
