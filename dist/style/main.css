@@ -217,4 +217,5 @@ input[type=range]::-ms-fill-upper {
 	background: #eeddbb;
 	background-image: url("../assets/images/splash3.jpg");
 	background-size: cover;
+	background-position: center center;
 }
