@@ -1,0 +1,10 @@
+digraph G {
+
+    subgraph %FILENAME% {
+    	node [style=filled,color=%COLOR%];
+    	%NODES%
+    	label = %FILENAME%;
+    }
+
+	end [shape=Msquare];
+}

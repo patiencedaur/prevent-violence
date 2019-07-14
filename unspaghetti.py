@@ -111,8 +111,31 @@ def print_schema(folder):
         print(schema[file])
         print()
 
-print_schema(folder)
+# Create a file for Viz.js #
 
-# Export to Graphviz:
-# label1 -> jump11, label1 -> jump12, label1 -> jump13...
-# label2 -> jump21, label3 -> jump22...
+def viz_js(schema):
+    """
+    Generate a file to export to Viz.js:
+    label1 -> jump11, label1 -> jump12, label1 -> jump13...
+    label2 -> jump21, label3 -> jump22...
+    """
+    colors = ['yellow', 'green', 'pink', 'lightblue', 'orange', 'grey']
+    subgraph = """
+    subgraph %FILENAME% {
+    	node [style=filled,color=%COLOR%];
+    	%NODES%
+    	label = %FILENAME%;
+    }
+"""
+    with open('viz.txt', 'w') as f:
+        # begin
+        f.write("digraph G {\n")
+        # create a subgraph for each file in the scenario
+        for file in schema.keys():
+            pass
+        f.write(subgraph)
+        # Display 'end' node
+        f.write("\n\tend [shape=Msquare];\n}")
+
+schema = scenario_schema(folder)
+viz_js(schema)
