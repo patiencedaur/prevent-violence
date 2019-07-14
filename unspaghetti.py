@@ -61,7 +61,6 @@ def start_labels(script_file_no_spaces):
     # iterate over labels
     return re.finditer(regex_start_parts, starting_script)
 
-
 def parse_start(label):
     """
     Starting labels look somewhat different:
@@ -84,7 +83,7 @@ def parse_regular(label):
     jump_names = [j[5:] for j in jumps]
     return (label_name, jump_names)
 
-def scenario_schema(folder):
+def story_schema(folder):
     """
     Parse all script files in the folder.
     Return a list of nodes like (label, [jump points]).
@@ -105,7 +104,7 @@ def scenario_schema(folder):
     return schema
 
 def print_schema(folder):
-    schema = scenario_schema(folder)
+    schema = story_schema(folder)
     for file in schema.keys():
         print(file)
         print(schema[file])
@@ -137,5 +136,5 @@ def viz_js(schema):
         # Display 'end' node
         f.write("\n\tend [shape=Msquare];\n}")
 
-schema = scenario_schema(folder)
+schema = story_schema(folder)
 viz_js(schema)
