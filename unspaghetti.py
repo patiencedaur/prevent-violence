@@ -15,19 +15,24 @@ monogatari.script({'label2': [something], 'label2': [something]});
 
 5 ...graph!
 """
-# Doesn't work with Ep1 somehow... gets empty label names. Whitespace? FIX
-
-labels = []
 
 folder = 'dist/js'
-mask = '^(?:(?!options)(?!main)(?!storage).)*?\.js$'
-files = []
+# Only look for story scripts in this folder
+file_mask = '^(?:(?!options)(?!main)(?!storage).)*?\.js$'
 
+# Regular Expressions #
+
+# jump directive with next label name
 regex_jump = 'jump \w+'
-regex_label = 'monogatari\.label\s?\(.*?\]\);'
+# monogatari.label(SOMETHING]);
+# Do not use spaces before the opening bracket after monogatari.label in the code.
+regex_label = 'monogatari\.label\s?\(.*?\]\);?'
+# monogatari.script({SOMETHING});
 regex_script = 'monogatari\.script\s?\(\{.*?\}\);'
-# patterns like 'label_name': [something]
+# patterns like 'label_name': [something], encountered in the Start section
 regex_start_parts = '(?:\"|\')\w+(?:\"|\')\:\s\[.*?\]'
+
+# Data Extraction #
 
 def read_file(folder, file):
     """
@@ -37,10 +42,40 @@ def read_file(folder, file):
         contents = f.read()
     return ''.join(re.split(r'\t|\n', contents))
 
-
-def get_regular_label(label):
+def regular_labels(file_no_spaces):
     """
-    monogatari.label('name', [content])
+    Return an iterator over labels in regularly formatted files
+    (not like the Start label in script.js).
+    """
+    return re.finditer(regex_label, file_no_spaces)
+
+def start_labels(script_file_no_spaces):
+    """
+    Return an iterator over labels used in the start script.
+    Only applicable to the file called script.js
+    (because it is the only one using monogatari.script()-formatted labels).
+    """
+    # extract the "Start" script from the file, omitting other functions etc.
+    starting_script = re.findall(regex_script, script_file_no_spaces)[0]
+    # iterate over labels
+    return re.finditer(regex_start_parts, starting_script)
+
+
+def parse_start(label):
+    """
+    Starting labels look somewhat different:
+    monogatari.script({'name': [content], 'name2': [more_content]});
+    Parse a label like this and return (name, [where it jumps to]).
+    """
+    label_name = label.group().split('"')[1]
+    jumps = re.findall(regex_jump, label.group())
+    jump_names = [j[5:] for j in jumps]
+    return (label_name, jump_names)
+
+def parse_regular(label):
+    """
+    Parse a string like monogatari.label('name', [content]).
+    Return (name, [where it jumps to]).
     """
     label_content = label.group().split('monogatari.label')[1]
     label_name = label_content[2:].split('\'')[0]
@@ -48,36 +83,31 @@ def get_regular_label(label):
     jump_names = [j[5:] for j in jumps]
     return (label_name, jump_names)
 
-
-def get_start_label(label):
+def scenario_schema(folder):
     """
-    Starting labels look somewhat different:
-    monogatari.script({'name': [content], 'name2': [more_content]});
+    Parse all script files in the folder.
+    Return a list of nodes like (label, [jump points]).
     """
-    label_name = label.group().split('"')[1]
-    jumps = re.findall(regex_jump, label.group())
-    jump_names = [j[5:] for j in jumps]
-    return (label_name, jump_names)
+    schema = {}
+    for file in os.listdir(folder): # run through the folder
+        if re.fullmatch(file_mask, file): # find only script-related js files
+            no_spaces = read_file(folder, file)
+            file_labels = [] # a list of tuples for each file
+            if file == 'script.js': # parse and add 'start'-formatted labels
+                for label in start_labels(no_spaces):
+                    node = parse_start(label)
+                    file_labels.append(node)
+            for label in regular_labels(no_spaces): # parse and append the rest
+                node = parse_regular(label)
+                file_labels.append(node)
+            schema[file] = file_labels
+    return schema
 
+def print_schema(folder):
+    schema = scenario_schema(folder)
+    for file in schema.keys():
+        print(file)
+        print(schema[file])
+        print()
 
-for file in os.listdir(folder):
-    if re.fullmatch(mask, file):
-        no_spaces = read_file(folder, file)
-        if file == 'temp.js':
-            print(no_spaces)
-
-        if file == 'script.js':
-            starting_script = re.findall(regex_script, no_spaces)[0] # one and only
-            for label in re.finditer(regex_start_parts, starting_script):
-                node = get_start_label(label)
-                labels.append(node)
-                print(node)
-
-        for label in re.finditer(regex_label, no_spaces):
-            node = get_regular_label(label)
-            labels.append(node)
-            # if file == 'temp.js':
-            print(node)
-
-
-# print(labels)
+print_schema(folder)
