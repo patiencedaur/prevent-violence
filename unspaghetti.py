@@ -1,5 +1,6 @@
 import re
 import os
+from itertools import cycle
 
 """
 1 find anything that looks like
@@ -118,23 +119,34 @@ def viz_js(schema):
     label1 -> jump11, label1 -> jump12, label1 -> jump13...
     label2 -> jump21, label3 -> jump22...
     """
-    colors = ['yellow', 'green', 'pink', 'lightblue', 'orange', 'grey']
-    subgraph = """
-    subgraph %FILENAME% {
-    	node [style=filled,color=%COLOR%];
-    	%NODES%
-    	label = %FILENAME%;
-    }
-"""
+    colors = cycle(['yellow', 'green', 'pink', 'lightblue', 'orange', 'grey'])
+    end_nodes = []
+
     with open('viz.txt', 'w') as f:
-        # begin
+        # begin generating the file
         f.write("digraph G {\n")
         # create a subgraph for each file in the scenario
         for file in schema.keys():
-            pass
-        f.write(subgraph)
+            color = next(colors) # color of all nodes in the file
+            subgraph_name = re.sub("-", "_", file[:-3].capitalize())  # discard the hyphen and ".js" in name
+            f.write("\n\tsubgraph %s {\n" % subgraph_name)
+            f.write("\t\tnode [style=filled, color=%s];\n" % color)
+            for node in schema[file]: # tuples like (label_name, [list_of_jumps])
+                if node[1]:
+                    for jump in node[1]: # go through all jumps
+                        f.write("\t\t%s -> %s;\n" % (node[0], jump))
+                # otherwise, it's an end node
+                else:
+                    print("end node", node)
+                    end_nodes.append(node[0])
+            # display label and close subgraph
+            f.write('\t\tlabel = "%s";\n\t}\n' % subgraph_name)
+        # end nodes are out of any subgraph
+        for end_node in end_nodes:
+            f.write("\t%s -> end;\n" % end_node)
         # Display 'end' node
         f.write("\n\tend [shape=Msquare];\n}")
 
 schema = story_schema(folder)
+# print_schema(folder)
 viz_js(schema)
