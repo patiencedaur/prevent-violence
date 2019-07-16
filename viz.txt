@@ -59,6 +59,7 @@ digraph G {
 
 	subgraph Script {
 		node [style=filled, color=green];
+		Start [shape=box];
 		Start -> QuestionFamily;
 		QuestionFamily -> QuestionPersistence;
 		QuestionFamily -> QuestionPersistence;
