@@ -1,24 +1,23 @@
 import re
 import os
 from itertools import cycle
-
 """
-1 find anything that looks like
-monogatari.label('label1', [something]);
-OR
-monogatari.script({'label2': [something], 'label2': [something]});
+Monogatari Visual Novel Unspaghettifier
 
-2 make [(label1, [something]), (label2, [something])...]
+Helps you keep up with the growing script of your Monogatari novel.
+Keep track of possible storylines, visualizing them in a graph.
 
-3 get all "jump label_name" from [something]'s
-
-4 organize it into [(label1, [list_of_jumps]), (label2, [list_of_jumps])...]
-
-5 ...graph!
+Put this file in your project folder (where the "dist" folder is located).
+Launch it from the command line: `python3 unspaghetti.py`
+A file called `viz.txt` will be created. This is your story in the form of a graph in DOT language.
+Copy the context of `viz.txt` and post it on viz-js.com. The rest will be done by Viz.js.
+Viz.js is Graphviz (a library to draw graphs) on the web.
+Ta-da!
 """
 
-folder = 'dist/js'
 # Only look for story scripts in this folder
+folder = 'dist/js'
+# Do not consider non-storyline-related JS
 file_mask = '^(?:(?!options)(?!main)(?!storage).)*?\.js$'
 
 # Regular Expressions #
@@ -26,7 +25,7 @@ file_mask = '^(?:(?!options)(?!main)(?!storage).)*?\.js$'
 # jump directive with next label name
 regex_jump = 'jump \w+'
 # monogatari.label(SOMETHING]);
-# Do not use spaces before the opening bracket after monogatari.label in the code
+# Do not use spaces before the opening bracket after monogatari.label in the story scripts
 # it doesn't work for whatever reason
 regex_label = 'monogatari\.label\s?\(.*?\]\);?'
 # monogatari.script({SOMETHING});
@@ -87,7 +86,7 @@ def parse_regular(label):
 def story_schema(folder):
     """
     Parse all script files in the folder.
-    Return a list of nodes like (label, [jump points]).
+    Return a dict of nodes like {file: [(label1, [jump points]), [(label2, [jump points])]}.
     """
     schema = {}
     for file in os.listdir(folder): # run through the folder
@@ -111,13 +110,11 @@ def print_schema(folder):
         print(schema[file])
         print()
 
-# Create a file for Viz.js #
+# Create a DOT file for Viz.js #
 
 def viz_js(schema):
     """
-    Generate a file to export to Viz.js:
-    label1 -> jump11, label1 -> jump12, label1 -> jump13...
-    label2 -> jump21, label3 -> jump22...
+    Generate a file in Dot language to export to Viz.js.
     """
     colors = cycle(['yellow', 'green', 'pink', 'lightblue', 'orange', 'grey'])
     end_nodes = []
@@ -132,19 +129,21 @@ def viz_js(schema):
             f.write("\n\tsubgraph %s {\n" % subgraph_name)
             f.write("\t\tnode [style=filled, color=%s];\n" % color)
             for node in schema[file]: # tuples like (label_name, [list_of_jumps])
+                if node[0] == "Start":
+                    f.write("\t\tStart [shape=box];\n")
                 if node[1]:
                     for jump in node[1]: # go through all jumps
-                        f.write("\t\t%s -> %s;\n" % (node[0], jump))
+                            f.write("\t\t%s -> %s;\n" % (node[0], jump))
                 # otherwise, it's an end node
                 else:
-                    print("end node", node)
+                    # print("end node", node)
                     end_nodes.append(node[0])
             # display label and close subgraph
             f.write('\t\tlabel = "%s";\n\t}\n' % subgraph_name)
         # end nodes are out of any subgraph
         for end_node in end_nodes:
             f.write("\t%s -> end;\n" % end_node)
-        # Display 'end' node
+        # Display the node 'end'
         f.write("\n\tend [shape=Msquare];\n}")
 
 schema = story_schema(folder)

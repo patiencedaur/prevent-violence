@@ -34,3 +34,7 @@ release
 
 # TODO file
 todo.txt
+
+# Graph visualization
+viz.txt
+graph*.png
