@@ -1,3 +1,5 @@
+# I'm a Dot graph of your Monogatari visual novel!
+
 digraph G {
 
 	subgraph Episode_1 {

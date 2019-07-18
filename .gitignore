@@ -36,5 +36,6 @@ release
 todo.txt
 
 # Graph visualization
+unspaghetti.py
 viz.txt
 graph*.png

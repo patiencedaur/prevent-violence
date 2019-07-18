@@ -128,6 +128,7 @@ def viz_js(schema):
 
     with open('viz.txt', 'w') as f:
         # begin generating the file
+        f.write("# I'm a Dot graph of your Monogatari visual novel!\n\n")
         f.write("digraph G {\n")
         # create a subgraph for each file in the scenario
         for file in schema.keys():
