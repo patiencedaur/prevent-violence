@@ -1,6 +1,3 @@
-import re
-import os
-from itertools import cycle
 """
 Monogatari Visual Novel Unspaghettifier
 
@@ -14,6 +11,10 @@ Copy the context of `viz.txt` and post it on viz-js.com. The rest will be done b
 Viz.js is Graphviz (a library to draw graphs) on the web.
 Ta-da!
 """
+
+import re
+import os
+from itertools import cycle
 
 # Only look for story scripts in this folder
 folder = 'dist/js'
@@ -83,6 +84,12 @@ def parse_regular(label):
     jump_names = [j[5:] for j in jumps]
     return (label_name, jump_names)
 
+def fullmatch(regex, string, flags=0):
+    """
+    For backwards compatibility. Emulate python3 fullmatch.
+    """
+    return re.match("(?:" + regex + r")\Z", string, flags=flags)
+
 def story_schema(folder):
     """
     Parse all script files in the folder.
@@ -90,7 +97,7 @@ def story_schema(folder):
     """
     schema = {}
     for file in os.listdir(folder): # run through the folder
-        if re.fullmatch(file_mask, file): # find only script-related js files
+        if fullmatch(file_mask, file): # find only script-related js files
             no_spaces = read_file(folder, file)
             file_labels = [] # a list of tuples for each file
             if file == 'script.js': # parse and add 'start'-formatted labels
