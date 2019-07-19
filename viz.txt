@@ -74,49 +74,8 @@ digraph G {
 		label = "Script";
 	}
 
-	subgraph Episode_2 {
-		node [style=filled, color=pink];
-		Episode2 -> Party;
-		Episode2 -> Party;
-		Party -> LetsDance;
-		LetsDance -> Dancing;
-		LetsDance -> DanceCheckPersist;
-		DanceCheckPersist -> ItsMyBirthday;
-		DanceCheckPersist -> EmptySpace;
-		ItsMyBirthday -> Dancing;
-		ItsMyBirthday -> EmptySpace;
-		Dancing -> Episode2ConflictChoice;
-		EmptySpace -> Episode2ConflictChoice;
-		Episode2ConflictChoice -> Ep2GuiltAcknowledged;
-		Episode2ConflictChoice -> Ep2Randomizer;
-		Episode2ConflictChoice -> Ep2Arguing;
-		Ep2GuiltAcknowledged -> UnderstandMe;
-		UnderstandMe -> Episode2Sex;
-		Ep2Randomizer -> UnderstandMe;
-		Ep2Randomizer -> Ep2SexCheck;
-		Ep2Arguing -> Ep2SexCheck;
-		Ep2SexCheck -> Slut;
-		Ep2SexCheck -> SorryGotUpset;
-		Slut -> SlutReact;
-		SorryGotUpset -> UnderstandMe;
-		SlutReact -> MoveInTogether;
-		SlutReact -> FavoriteSong;
-		MoveInTogether -> Episode3;
-		FavoriteSong -> Episode3;
-		Episode2Sex -> Goddess;
-		Episode2Sex -> SexCheckPersist;
-		Goddess -> Episode3;
-		SexCheckPersist -> TwoMonthsTogether;
-		SexCheckPersist -> SoSerious;
-		TwoMonthsTogether -> Goddess;
-		TwoMonthsTogether -> YouAreBoring;
-		YouAreBoring -> SoSerious;
-		SoSerious -> Episode3;
-		label = "Episode_2";
-	}
-
 	subgraph Episode_3 {
-		node [style=filled, color=lightblue];
+		node [style=filled, color=pink];
 		Episode3 -> HidingSomething;
 		Episode3 -> AskMe;
 		HidingSomething -> ImJustNervous;
@@ -171,9 +130,50 @@ digraph G {
 		TalkToYouLater -> Bad;
 		label = "Episode_3";
 	}
+
+	subgraph Episode_2 {
+		node [style=filled, color=lightblue];
+		Episode2 -> Party;
+		Episode2 -> Party;
+		Party -> LetsDance;
+		LetsDance -> Dancing;
+		LetsDance -> DanceCheckPersist;
+		DanceCheckPersist -> ItsMyBirthday;
+		DanceCheckPersist -> EmptySpace;
+		ItsMyBirthday -> Dancing;
+		ItsMyBirthday -> EmptySpace;
+		Dancing -> Episode2ConflictChoice;
+		EmptySpace -> Episode2ConflictChoice;
+		Episode2ConflictChoice -> Ep2GuiltAcknowledged;
+		Episode2ConflictChoice -> Ep2Randomizer;
+		Episode2ConflictChoice -> Ep2Arguing;
+		Ep2GuiltAcknowledged -> UnderstandMe;
+		UnderstandMe -> Episode2Sex;
+		Ep2Randomizer -> UnderstandMe;
+		Ep2Randomizer -> Ep2SexCheck;
+		Ep2Arguing -> Ep2SexCheck;
+		Ep2SexCheck -> Slut;
+		Ep2SexCheck -> SorryGotUpset;
+		Slut -> SlutReact;
+		SorryGotUpset -> UnderstandMe;
+		SlutReact -> MoveInTogether;
+		SlutReact -> FavoriteSong;
+		MoveInTogether -> Episode3;
+		FavoriteSong -> Episode3;
+		Episode2Sex -> Goddess;
+		Episode2Sex -> SexCheckPersist;
+		Goddess -> Episode3;
+		SexCheckPersist -> TwoMonthsTogether;
+		SexCheckPersist -> SoSerious;
+		TwoMonthsTogether -> Goddess;
+		TwoMonthsTogether -> YouAreBoring;
+		YouAreBoring -> SoSerious;
+		SoSerious -> Episode3;
+		label = "Episode_2";
+	}
 	Good -> end;
 	Bad -> end;
 	Worst -> end;
 
-	end [shape=Msquare];
+	end [shape=Msquare];   
 }
