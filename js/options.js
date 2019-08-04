@@ -20,7 +20,7 @@ monogatari.settings({
 	'Name': 'Куда движутся отношения',
 
 	// The version of your game in semantic versioning (https://semver.org/).
-	'Version': '0.4.0',
+	'Version': '0.4.2',
 
 	// Initial Label *
 	'Label': 'Start',
@@ -52,12 +52,12 @@ monogatari.settings({
 
 	// The Aspect Ratio your background images are on. This only has effect on
 	// web deployed novels if forceAspectRatio flag is on.
-	'AspectRatio': '16:9',
+	'AspectRatio': '4:3',
 
 	// Force aspect ratio, it will make all images to comply with aspect ratio.
 	// Values: 'None' (don't force), 'Visuals' (force only visuals)
 	// or 'Global' (force all game)
-	'ForceAspectRatio': 'Global',
+	'ForceAspectRatio': 'Visuals',
 
 	// Enables or disables the typing text animation for the whole game.
 	'TypeAnimation': false,
@@ -80,7 +80,7 @@ monogatari.settings({
 	// to portrait or landscape, a warning message will be displayed so the
 	// player rotates its device.
 	// Possible values: any, portrait or landscape.
-	'Orientation': 'any',
+	'Orientation': 'portrait',
 
 	// Allow players to skip through the game. Similar to the auto play feature,
 	// skipping will allow players to go through the game really fast.
