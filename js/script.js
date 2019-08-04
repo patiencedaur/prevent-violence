@@ -71,7 +71,13 @@ monogatari.assets ('images', {
 
 // Define the backgrounds for each scene.
 monogatari.assets ('scenes', {
-
+	"cafe1": "cafe1.jpg",
+	"cafe2": "cafe2.jpg",
+	"cafe3": "cafe3.jpg",
+	"concert": "concert1.jpg",
+	"dance": "dance.jpg",
+	"home_party": "home_party2.jpg",
+	"walk_you_home": "walk_home.jpg"
 });
 
 
@@ -90,7 +96,6 @@ monogatari.characters ({
 monogatari.script ({
 	// The game starts here.
 	"Start": [
-		'show scene #f7f6f6 with fadeIn',
 		// "notify Welcome",
 		"Прежде чем мы начнём, пожалуйста, ответь на два вопроса.",
 		"Согласна ли ты со следующими утверждениями:",

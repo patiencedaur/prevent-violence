@@ -4,9 +4,6 @@ monogatari.label('Episode1', [
     console.log("Настойчивость: " + monogatari.storage().personal_ideas.persist);
     console.log("Семью хочу-не могу: " + monogatari.storage().personal_ideas.family_important);
   },
-  'Семья - это важно: {{personal_ideas.family_important}}',
-  'Настойчивость: {{personal_ideas.persist}}',
-
   'show scene #f7f6f6 with fadeIn',
   'Вы идёте на свидание в кафе. Он галантно придерживает перед тобой дверь.',
   {
@@ -20,6 +17,7 @@ monogatari.label('Episode1', [
 ])
 
 monogatari.label('AskAboutCoat', [
+  'show scene cafe1',
   'l Я помогу тебе снять пальто?',
   {
     'Choice': {
@@ -36,12 +34,13 @@ monogatari.label('AskAboutCoat', [
 ])
 
 monogatari.label('HelpWithCoat', [
+  'show scene cafe1',
   'Он снимает с тебя пальто, и вы садитесь за столик.',
   'jump CoatOff'
 ])
 
 monogatari.label('CoatOff', [
-  'show scene #f7f6f6 with fadeIn',
+  'show scene cafe2',
   'Вы мило говорите о том, о сём.',
   'Постепенно вы узнаёте друг друга лучше, и разговор переходит на серьёзные темы.',
 
@@ -72,12 +71,13 @@ monogatari.label('CoatOff', [
 
 monogatari.label('KickOthers', [
   //'show message Help',
-  'show scene #f7f6f6 with fadeIn',
+  'show scene cafe3',
   'Твой спутник идёт разбираться с соседями и угрожает им рукоприкладством.',
   'jump Bill',
 ]);
 
 monogatari.label('Bill', [
+  'show scene cafe3.jpg',
   'Вы обсуждаете его работу, твой универ, стараетесь не говорить о политике...',
   'Приносят счёт. Он предлагает взять оплату на себя.',
   {
